@@ -1,0 +1,12 @@
+.\" Manpage for printf.
+.TH man 8 "12 October 2023" "1.0" "printf man page"
+.SH NAME
+printf \- a function that prints a simple character, string, is able to hand integers and hexadecimal characters.
+.SH SYNOPSIS
+printf [ARGUMENT]
+.SH DESCRIPTION
+printf is a function that prints a simple character, string, is able to hand integers and hexadecimal characters.
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Oluchukwu Joseph, Philani Kubeka
