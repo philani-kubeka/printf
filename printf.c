@@ -47,6 +47,33 @@ int write_int(int fd, int num)
 }
 
 /**
+ * binary - converts number to binary and writes it to std input
+ * @fd: file descriptor
+ * @number: number
+ * Return: lenght of string
+*/
+int binary(int fd, int number)
+{
+	int index = 0, i, j;
+	char temp;
+	char buffer[32];
+
+	do
+	{
+		buffer[index++] = number % 2 + '0';
+		number /= 2;
+	} while (number > 0);
+	buffer[index] = '\0';
+	for (i = index - 1, j = 0; j <= i; i--, j++)
+	{
+		temp = buffer[i];
+		buffer[i] = buffer[j];
+		buffer[j] = temp;
+	}
+	return (write(fd, buffer, index));
+}
+
+/**
  * _printf - function that produces output according to format
  *
  * @format: format character
@@ -84,6 +111,10 @@ int _printf(const char *format, ...)
 					case 'i':
 							num = va_arg(ap, int);
 							counter += write_int(1, num);
+							break;
+					case 'b':
+							num = va_arg(ap, int);
+							counter += binary(1, num);
 							break;
 					default:
 						counter += write_char(1, '%');
