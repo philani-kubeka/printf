@@ -1,6 +1,35 @@
 #include "main.h"
 
 /**
+ * write_char - outputs character
+ *
+ * @fd: fd
+ * @c: character
+ *
+ * Return: char
+ */
+int write_char(int fd, char c)
+{
+	char buffer[2];
+
+	buffer[0] = c;
+	return (write(fd, buffer, 1));
+}
+
+/**
+ * write_str - outputs string
+ *
+ * @fd: fd
+ * @str: string
+ *
+ * Return: string
+ */
+int write_str(int fd, const char *str)
+{
+	return (write(fd, str, strlen(str)));
+}
+
+/**
  * _printf - function that produces output according to format
  *
  * @format: format character
@@ -10,42 +39,36 @@
 int _printf(const char *format, ...)
 {
 	int counter = 0;
-	char buffer[2], *str;
+	char *str;
 	va_list ap;
 
 	va_start(ap, format);
 	while (*format != '\0')
 	{
-		switch (*format)
+		if (*format != '%')
 		{
-			case '%':
-				format++;
+			counter += write_char(1, *format);
+		}
+		else
+		{
+			format++;
 				switch (*format)
 				{
 					case 'c':
-						buffer[0] = va_arg(ap, int);
-						write(1, buffer, 1);
-						counter++;
+						counter += write_char(1,  va_arg(ap, int));
 						break;
 					case 's':
 						str = va_arg(ap, char *);
 						str = (str != NULL) ? str : "(null)";
-						write(1, str, strlen(str));
-						counter += strlen(str);
+						counter += write_str(1, str);
 						break;
 					case '%':
-						write(1, "%", 1);
-						counter++;
+						counter += write_char(1, '%');
 						break;
 					default:
-						write(1, "%", 1);
-						write(1, format, 1);
-						counter += 2;
+						counter += write_char(1, '%');
+						counter += write_char(1, *format);
 				}
-				break;
-			default:
-				write(1, format, 1);
-				counter++;
 		}
 		format++;
 	}
