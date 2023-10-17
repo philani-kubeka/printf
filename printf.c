@@ -30,6 +30,23 @@ int write_str(int fd, const char *str)
 }
 
 /**
+ * write_int - outputs int
+ *
+ * @fd: fd
+ * @num: number
+ *
+ * Return: integer
+ */
+int write_int(int fd, int num)
+{
+	char buffer[20];
+	int len;
+
+	len = sprintf(buffer, "%d", num);
+	return (write(fd, buffer, len));
+}
+
+/**
  * _printf - function that produces output according to format
  *
  * @format: format character
@@ -38,7 +55,7 @@ int write_str(int fd, const char *str)
  */
 int _printf(const char *format, ...)
 {
-	int counter = 0;
+	int counter = 0, num;
 	char *str;
 	va_list ap;
 
@@ -46,9 +63,7 @@ int _printf(const char *format, ...)
 	while (*format != '\0')
 	{
 		if (*format != '%')
-		{
 			counter += write_char(1, *format);
-		}
 		else
 		{
 			format++;
@@ -65,6 +80,11 @@ int _printf(const char *format, ...)
 					case '%':
 						counter += write_char(1, '%');
 						break;
+					case 'd':
+					case 'i':
+							num = va_arg(ap, int);
+							counter += write_int(1, num);
+							break;
 					default:
 						counter += write_char(1, '%');
 						counter += write_char(1, *format);
