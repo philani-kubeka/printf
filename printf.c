@@ -56,19 +56,20 @@ int binary(int fd, int number)
 {
 	int index = 0, i, j;
 	char temp;
-	char buffer[32];
+	char buffer[64];
 
 	do {
 		buffer[index++] = number % 2 + '0';
 		number /= 2;
 	} while (number > 0);
-	for (i = index, j = 0; j <= i; i--, j++)
+	buffer[index] = '\0';
+	for (i = index - 1, j = 0; j <= i; i--, j++)
 	{
 		temp = buffer[i];
 		buffer[i] = buffer[j];
 		buffer[j] = temp;
 	}
-	return (write(fd, buffer, index - 1));
+	return (write(fd, buffer, index));
 }
 
 /**
