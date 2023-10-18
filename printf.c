@@ -54,12 +54,12 @@ int write_int(int fd, int num)
 */
 int binary(int fd, int number)
 {
-	int index = 0;
+	int index = 0, i;
 	char buffer[33];  /*Assuming a 32-bit integer*/
 
 	if (number == 0)
 	{
-		for (int i = 0; i < 32; i++)
+		for (i = 0; i < 32; i++)
 			buffer[index++] = '0';
 	}
 	else
@@ -71,7 +71,7 @@ int binary(int fd, int number)
 			/*Add 1*/
 			number++;
 		}
-		for (int i = 31; i >= 0; i--)
+		for (i = 31; i >= 0; i--)
 		buffer[index++] = ((number >> i) & 1) + '0';
 	}
 	buffer[index] = '\0';
