@@ -54,7 +54,7 @@ int write_int(int fd, int num)
 */
 int binary(int fd, int number)
 {
-	int index = 0, i;
+	int index = 0, i, significantBits;
 	char buffer[33];  /*Assuming a 32-bit integer*/
 
 	if (number == 0)
@@ -72,6 +72,14 @@ int binary(int fd, int number)
 			number++;
 		}
 		for (i = 31; i >= 0; i--)
+		{
+			if ((number >> i) & i)
+			{
+				significantBits = i + 1;
+				break;
+			}
+		}
+		for (i = significantBits; i >= 0; i--)
 		buffer[index++] = ((number >> i) & 1) + '0';
 	}
 	buffer[index] = '\0';
