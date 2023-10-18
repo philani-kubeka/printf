@@ -54,22 +54,28 @@ int write_int(int fd, int num)
 */
 int binary(int fd, int number)
 {
-	int index = 0, i, j;
-	char temp;
-	char buffer[64];
+	int index = 0;
+	char buffer[33];  /*Assuming a 32-bit integer*/
 
-	do {
-		buffer[index++] = number % 2 + '0';
-		number /= 2;
-	} while (number > 0);
-	buffer[index] = '\0';
-	for (i = index - 1, j = 0; j <= i; i--, j++)
+	if (number == 0)
 	{
-		temp = buffer[i];
-		buffer[i] = buffer[j];
-		buffer[j] = temp;
+		for (int i = 0; i < 32; i++)
+			buffer[index++] = '0';
 	}
-	return (write(fd, buffer, index));
+	else
+	{
+		if (number < 0)
+		{
+			/*Invert the bits*/
+			number = ~number;
+			/*Add 1*/
+			number++;
+		}
+		for (int i = 31; i >= 0; i--)
+		buffer[index++] = ((number >> i) & 1) + '0';
+	}
+	buffer[index] = '\0';
+	return write(fd, buffer, index);
 }
 
 /**
