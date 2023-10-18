@@ -8,4 +8,9 @@
 
 int _printf(const char *format, ...);
 
+int write_char(int fd, char c);
+int write_str(int fd, const char *str);
+int write_int(int fd, int num);
+int binary(int fd, int number);
+
 #endif
