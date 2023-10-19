@@ -8,5 +8,8 @@
 */
 int char_write(__attribute__((unused))va_list args, char character)
 {
-	return (write(1, &character, 1));
+	char string[2];
+
+	string[0] = character;
+	return (write(1, string, 1));
 }
