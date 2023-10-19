@@ -13,17 +13,19 @@ int write_binary(__attribute__((unused))va_list args, int number)
 	int num = abs(number);
 
 	if (num == 0)
-		string[0] = '0';
+	{
+		string[index] = '0';
+		index = 1;
+	}
 	do {
 		string[index++] = num % 2 + '0';
 		num /= 2;
 	} while (num > 0);
-	string[index] = '\0';
-	for (i = index - 1; j <= i; i--, j++)
+	for (i = (index - 1), j = 0; j <= i; i--, j++)
 	{
 		temp = string[j];
 		string[j] = string[i];
 		string[i] = temp;
 	}
-	return (write_string(args, string));
+	return (write(1, string, index));
 }

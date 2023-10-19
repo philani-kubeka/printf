@@ -11,7 +11,6 @@ int uppercase_hexadecimal(__attribute__((unused))va_list args, int number)
 	char string[64];
 	int length;
 
-	sprintf(string, "%X", number);
-	length = _strlen(string);
+	length = sprintf(string, "%X", number);
 	return (write(1, string, length));
 }

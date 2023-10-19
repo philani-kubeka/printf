@@ -11,7 +11,6 @@ int address(__attribute__((unused))va_list args, void *addr)
 	char string[32];
 	int length;
 
-	sprintf(string, "%p", addr);
-	length = _strlen(string);
+	length = sprintf(string, "%p", addr);
 	return (write(1, string, length));
 }

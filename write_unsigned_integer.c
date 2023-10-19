@@ -11,7 +11,6 @@ int write_unsigned_integer(__attribute__((unused))va_list args, unsigned int num
 	char string[64];
 	int length;
 
-	sprintf(string, "%u", number);
-	length = _strlen(string);
+	length = sprintf(string, "%u", number);
 	return (write(1, string, length));
 }
