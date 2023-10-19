@@ -8,10 +8,9 @@
 */
 int write_integer(__attribute__((unused))va_list args, int number)
 {
-	char string[32];
+	char string[20];
 	int length;
 
-	sprintf(string, "%i", number);
-	length = _strlen(string);
+	length = sprintf(string, "%i", number);
 	return (write(1, string, length));
 }
